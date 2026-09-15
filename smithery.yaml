@@ -1,0 +1,28 @@
+# Smithery listing — runs the published npm stdio package.
+# Preferred for ChatGPT / Claude / Cursor: https://mcp.nexdoc.design/mcp (OAuth).
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - nxdApiKey
+    properties:
+      nxdApiKey:
+        type: string
+        description: NexDoc API key (nxd_live_...). Prefer https://mcp.nexdoc.design/mcp with OAuth when the client supports remote MCP.
+      nxdApiUrl:
+        type: string
+        default: https://api.nexdoc.design
+        description: NexDoc Design API base URL
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@nexdoc/mcp-server'],
+      env: {
+        NXD_API_KEY: config.nxdApiKey,
+        NXD_API_URL: config.nxdApiUrl || 'https://api.nexdoc.design'
+      }
+    })
+  exampleConfig:
+    nxdApiKey: nxd_live_...
+    nxdApiUrl: https://api.nexdoc.design
